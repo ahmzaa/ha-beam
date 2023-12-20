@@ -1,0 +1,61 @@
+#!/usr/bin/python
+# Author: AHMZA
+# This script is a post / get interface for the home assistant api.
+# One use of this is toggling entities i.e lights or light groups
+
+# Need to do:
+# - Work on the get_request() and parse_json()
+
+import argparse
+from requests import post
+
+parser = argparse.ArgumentParser(
+    prog = 'habeam',
+    description = 'Home Assistant API Controller',
+    epilog = 'Any Questions feel free to reach out via support@ahmza.com'
+)
+
+group_con = parser.add_argument_group('Connection')
+group_con.add_argument('-u', '--url', required = True, help = 'Home Assistant Server URL')
+group_con.add_argument('-t', '--token', required = True, help = 'Home Assistant Long Lived Token')
+group_con.add_argument('-m', '--method', default = 'p', choices = ['g', 'p'], help = 'Specify The Method i.e GET / POST. Default Post')
+
+group_ent = parser.add_argument_group('Entity')
+group_ent.add_argument('-e', '--entity', required = True, help = 'Home Assistant Entity ID')
+group_ent.add_argument('-c', '--control', default = 'toggle', choices = ['on', 'off', 'toggle'], help = 'Control Action. Default Toggle')
+
+args = parser.parse_args()
+
+def main():
+    url = args.url +'/api/services/light/' +args.control
+    headers = {'Authorization': 'Bearer ' +args.token, 'content-type': 'application/json'}
+    data = {"entity_id": args.entity}
+
+    if args.method == 'g':
+        get_request(url,headers,data)
+    elif args.method == 'p':
+        post_request(url,headers,data)
+
+#    parser.print_help()
+
+def get_request(url,headers,data):
+    return
+
+def parse_json():
+    return
+
+def post_request(url,headers,data):
+    response = post(url, headers=headers, json=data)
+
+main()
+
+
+
+
+
+# url = "https://ha.ahmza.com/api/services/light/toggle"
+# headers = {"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxNWY4MmQ3ZGQxY2U0ODhmYTRkZDRiODVkZDY1NWQzMSIsImlhdCI6MTcwMTQyODU2MywiZXhwIjoyMDE2Nzg4NTYzfQ.BqUycY8MBgolZ2E_R3wjdybTi5brc_hZxp9Q7K0fF0g", "content-type": "application/json"}
+# data = {"entity_id": "light.group_attic_ws"}
+
+# response = post(url, headers=headers, json=data)
+
