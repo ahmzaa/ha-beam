@@ -48,14 +48,3 @@ def post_request(url,headers,data):
     response = post(url, headers=headers, json=data)
 
 main()
-
-
-
-
-
-# url = "https://ha.ahmza.com/api/services/light/toggle"
-# headers = {"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxNWY4MmQ3ZGQxY2U0ODhmYTRkZDRiODVkZDY1NWQzMSIsImlhdCI6MTcwMTQyODU2MywiZXhwIjoyMDE2Nzg4NTYzfQ.BqUycY8MBgolZ2E_R3wjdybTi5brc_hZxp9Q7K0fF0g", "content-type": "application/json"}
-# data = {"entity_id": "light.group_attic_ws"}
-
-# response = post(url, headers=headers, json=data)
-
