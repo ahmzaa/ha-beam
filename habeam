@@ -5,9 +5,10 @@
 
 # Need to do:
 # - Work on the get_request() and parse_json()
+# - Add argument to take in request action.
 
 import argparse
-from requests import post
+import requests
 
 parser = argparse.ArgumentParser(
     prog = 'habeam',
@@ -36,7 +37,7 @@ def main():
     elif args.method == 'p':
         post_request(url,headers,data)
 
-#    parser.print_help()
+    parser.print_help()
 
 def get_request(url,headers,data):
     return
@@ -45,6 +46,6 @@ def parse_json():
     return
 
 def post_request(url,headers,data):
-    response = post(url, headers=headers, json=data)
-
+    requests.post(url, headers=headers, json=data)
+    return
 main()
