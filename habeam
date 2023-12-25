@@ -46,6 +46,10 @@ def parse_json():
     return
 
 def post_request(url,headers,data):
-    requests.post(url, headers=headers, json=data)
-    return
+    try:
+        requests.post(url, headers=headers, json=data)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
+    else:
+        exit()
 main()
