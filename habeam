@@ -1,12 +1,14 @@
 #!/usr/bin/python
 # Author: AHMZA
-# This script is a post / get interface for the home assistant api.
-# One use of this is toggling entities i.e lights or light groups
+"""This script is a post / get interface for the home assistant api.
+One use of this is toggling entities i.e lights or light groups"""
 
 
 # Need to do:
 # - Work on the get_request() and parse_json()
+# - Add argument to take in request action.
 
+import sys
 import argparse
 import requests
 
@@ -60,7 +62,11 @@ def parse_json(data):
 def request_handler(method, url, headers, data):
     """handles requests"""
     if method == "post":
-        requests.post(url, headers=headers, json=data)
+        try:
+            requests.post(url, headers=headers, json=data)
+        except requests.exceptions.RequestException as e:
+            raise SystemExit(e) from e
+        sys.exit()
     elif method == "get":
         parse_json(requests.get(url, headers=headers, json=data))
     else:
