@@ -9,6 +9,7 @@ One use of this is toggling entities i.e lights or light groups"""
 # - Add argument to take in request action.
 # - Get entity IDs and make them selectable.
 
+
 import sys
 import json
 import argparse
@@ -46,38 +47,28 @@ group_ent.add_argument(
 args = parser.parse_args()
 
 
-# def get_request(url, headers, data):
-#     '''gets data from the HA server'''
-#     return
-
-
 def parse_json(data):
     """take data from get_requests and parse into usable format"""
     print(data)
 
 
-# def post_request(url, headers, data):
-#     '''posts data to the HA server'''
-#     requests.post(url, headers=headers, json=data)
-
-
 def request_handler(method, url, headers, data):
     """handles requests"""
-    if method == "post":
+    if method == "p":
         try:
             requests.post(url, headers=headers, json=data)
         except requests.exceptions.RequestException as e:
             raise SystemExit(e) from e
         sys.exit()
-    elif method == "get":
+    elif method == "g":
         parse_json(requests.get(url, headers=headers, json=data))
     else:
-        print("method" + method + "not supported")
+        print("method " + method + " not supported")
         return
 
 
-def main():
-    """picks method of communication based on the -m flag"""
+def main(method):
+    """picks method of communication based on the -m flag, sets variables"""
     url = args.url + "/api/services/light/" + args.control
     headers = {
         "Authorization": "Bearer " + args.token,
@@ -85,11 +76,7 @@ def main():
     }
     data = {"entity_id": args.entity}
 
-    if args.method == "g":
-        request_handler("get", url, headers, data)
-    elif args.method == "p":
-        request_handler("post", url, headers, data)
-
+    request_handler(method, url, headers, data)
     parser.print_help()
 
-main()
+main(args.method)
