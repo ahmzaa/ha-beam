@@ -7,8 +7,10 @@ One use of this is toggling entities i.e lights or light groups"""
 # Need to do:
 # - Work on the get_request() and parse_json()
 # - Add argument to take in request action.
+# - Get entity IDs and make them selectable.
 
 import sys
+import json
 import argparse
 import requests
 
@@ -89,6 +91,5 @@ def main():
         request_handler("post", url, headers, data)
 
     parser.print_help()
-
 
 main()
